@@ -36,8 +36,7 @@ namespace Lesson1
 
         private static async Task<string> GetPostAsync(int postNum)
         {
-            var client = new HttpClient();
-
+            using var client = new HttpClient();
             var cts = new CancellationTokenSource();
             cts.CancelAfter(10000);
             var uri = new Uri($"https://jsonplaceholder.typicode.com/posts/{postNum}");

@@ -11,7 +11,7 @@ namespace Lesson1
     {
         private static void Main()
         {
-            var tasks = new List<Task<string>>();
+            var tasks = new List<Task<Post>>();
             for (var i = 4; i <= 13; i++)
             {
                 tasks.Add(GetPostAsync(i));
@@ -25,7 +25,7 @@ namespace Lesson1
             {
                 foreach (var result in results.Result)
                 {
-                    sw.WriteLine(new Post(result));
+                    sw.WriteLine(result);
                 }
             }
 
@@ -34,14 +34,15 @@ namespace Lesson1
             Console.ReadKey(true);
         }
 
-        private static async Task<string> GetPostAsync(int postNum)
+        private static async Task<Post> GetPostAsync(int postNum)
         {
             using var client = new HttpClient();
             var cts = new CancellationTokenSource();
             cts.CancelAfter(10000);
             var uri = new Uri($"https://jsonplaceholder.typicode.com/posts/{postNum}");
-
-            return await client.GetStringAsync(uri, cts.Token);
+            var postString = await client.GetStringAsync(uri, cts.Token);
+            Console.WriteLine($"Пост номер {postNum} получен.");
+            return new Post(postString);
         }
     }
 }

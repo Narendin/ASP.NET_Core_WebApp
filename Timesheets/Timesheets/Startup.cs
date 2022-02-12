@@ -11,8 +11,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Timesheets.BD.Interfaces;
+using Timesheets.BD.Models;
+using Timesheets.BD.Repositories;
 
-namespace Timesheets
+namespace Timesheets.BL
 {
     public class Startup
     {
@@ -26,12 +29,13 @@ namespace Timesheets
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Timesheets", Version = "v1" });
             });
+            services.AddScoped<IDbRepository<Person>, LocalDbRepository>();
+            services.AddSingleton<Person>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesheets", "Timesheets\Timesheets.csproj", "{1AA8792E-7956-4D0D-929E-E494A7B40D48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timesheets.BL", "Timesheets\Timesheets.BL.csproj", "{1AA8792E-7956-4D0D-929E-E494A7B40D48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesheets.BD", "Timesheets.BD\Timesheets.BD.csproj", "{1A91729D-BFE5-4CD1-AF82-452E860EF15C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesheets.API", "Timesheets.API\Timesheets.API.csproj", "{8FFFE259-6900-46F5-8F2A-00D2E061D3D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{1AA8792E-7956-4D0D-929E-E494A7B40D48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AA8792E-7956-4D0D-929E-E494A7B40D48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AA8792E-7956-4D0D-929E-E494A7B40D48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A91729D-BFE5-4CD1-AF82-452E860EF15C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A91729D-BFE5-4CD1-AF82-452E860EF15C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A91729D-BFE5-4CD1-AF82-452E860EF15C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A91729D-BFE5-4CD1-AF82-452E860EF15C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FFFE259-6900-46F5-8F2A-00D2E061D3D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FFFE259-6900-46F5-8F2A-00D2E061D3D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FFFE259-6900-46F5-8F2A-00D2E061D3D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FFFE259-6900-46F5-8F2A-00D2E061D3D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-﻿namespace Timesheets.BL.DTO
+﻿namespace Timesheets.API.DTO
 {
     public class PersonDto
     {

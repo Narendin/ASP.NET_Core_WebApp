@@ -1,6 +1,6 @@
 using System;
 
-namespace Timesheets
+namespace Timesheets.API
 {
     public class WeatherForecast
     {

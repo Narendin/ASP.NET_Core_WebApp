@@ -5,9 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Timesheets.BD.Interfaces;
 using Timesheets.BD.Models;
-using Timesheets.BL.DTO;
+using Timesheets.API.DTO;
 
-namespace Timesheets.BL.Controllers
+namespace Timesheets.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -82,6 +82,7 @@ namespace Timesheets.BL.Controllers
         public async Task DeleteAsync([FromRoute] int id, CancellationToken cts)
         {
             await _repository.DeleteAsync(id, cts);
+            return;
         }
 
         private static Person PersonFromDto(PersonDto dto)

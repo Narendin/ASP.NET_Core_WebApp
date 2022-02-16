@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Timesheets.BD.Interfaces;
 using Timesheets.BD.Models;
 
@@ -36,7 +37,7 @@ namespace Timesheets.BD.Repositories
             var personIndex = LocalDb.Data.FindIndex(x => x.Id == obj.Id);
             if (personIndex <= 0)
             {
-                return new Task(null, cts); //вот тут не уверен, что правильно делаю, ибо ошибка 500 возникает
+                return Task.CompletedTask;
             }
             return Task.Run(() => LocalDb.Data[personIndex] = obj, cts);
         }
@@ -46,8 +47,9 @@ namespace Timesheets.BD.Repositories
             var personIndex = LocalDb.Data.Find(x => x.Id == id);
             if (personIndex == null)
             {
-                return new Task(null, cts); //вот тут не уверен, что правильно делаю, ибо ошибка 500 возникает
+                return Task.CompletedTask;
             }
+
             return Task.Run(() => LocalDb.Data.Remove(personIndex), cts);
         }
 

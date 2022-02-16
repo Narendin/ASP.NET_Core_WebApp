@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Timesheets.API
+namespace Timesheets.BL
 {
     public class Class1
     {

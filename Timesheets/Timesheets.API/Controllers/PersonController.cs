@@ -82,7 +82,6 @@ namespace Timesheets.API.Controllers
         public async Task DeleteAsync([FromRoute] int id, CancellationToken cts)
         {
             await _repository.DeleteAsync(id, cts);
-            return;
         }
 
         private static Person PersonFromDto(PersonDto dto)

@@ -3,9 +3,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Timesheets.Controllers
+namespace Timesheets.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]

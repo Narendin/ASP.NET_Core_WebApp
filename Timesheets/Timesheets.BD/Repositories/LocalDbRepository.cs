@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,6 @@ namespace Timesheets.BD.Repositories
         public Task<Person> GetAsync(int id, CancellationToken cts)
         {
             var person = LocalDb.Data.Find(x => x.Id == id);
-
-            if (person == null)
-            {
-                return Task.Run(() => new Person(), cts);
-            }
-
             return Task.Run(() => person, cts);
         }
 
@@ -32,24 +27,20 @@ namespace Timesheets.BD.Repositories
             return Task.Run(() => LocalDb.Data.Add(obj), cts);
         }
 
-        public Task UpdateAsync(Person obj, CancellationToken cts)
+        public Task<bool> UpdateAsync(Person obj, CancellationToken cts)
         {
             var personIndex = LocalDb.Data.FindIndex(x => x.Id == obj.Id);
             if (personIndex <= 0)
             {
-                return Task.CompletedTask;
+                return Task.FromResult(false);
             }
-            return Task.Run(() => LocalDb.Data[personIndex] = obj, cts);
+            Task.Run(() => LocalDb.Data[personIndex] = obj, cts);
+            return Task.FromResult(true);
         }
 
-        public Task DeleteAsync(int id, CancellationToken cts)
+        public Task<bool> DeleteAsync(int id, CancellationToken cts)
         {
             var personIndex = LocalDb.Data.Find(x => x.Id == id);
-            if (personIndex == null)
-            {
-                return Task.CompletedTask;
-            }
-
             return Task.Run(() => LocalDb.Data.Remove(personIndex), cts);
         }
 
@@ -76,14 +67,9 @@ namespace Timesheets.BD.Repositories
             return Task.Run(() => list, cts);
         }
 
-        public Task<Person> FindByNameAsync(string name, CancellationToken cts)
+        public Task<List<Person>> FindByNameAsync(string name, CancellationToken cts)
         {
-            var person = LocalDb.Data.Find(x => x.FirstName == name);
-
-            if (person == null)
-            {
-                return Task.Run(() => new Person(), cts);
-            }
+            var person = LocalDb.Data.FindAll(x => x.FirstName == name);
 
             return Task.Run(() => person, cts);
         }

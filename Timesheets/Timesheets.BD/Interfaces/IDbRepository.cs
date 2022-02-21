@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -33,7 +34,7 @@ namespace Timesheets.BD.Interfaces
         /// <param name="obj">Объект</param>
         /// <param name="cts">Маркер отмены</param>
         /// <returns></returns>
-        Task UpdateAsync(T obj, CancellationToken cts);
+        Task<bool> UpdateAsync(T obj, CancellationToken cts);
 
         /// <summary>
         /// Асинхронное удаление объекта из базы данных
@@ -41,7 +42,7 @@ namespace Timesheets.BD.Interfaces
         /// <param name="id">Id объекта</param>
         /// <param name="cts">Маркер отмены</param>
         /// <returns></returns>
-        Task DeleteAsync(int id, CancellationToken cts);
+        Task<bool> DeleteAsync(int id, CancellationToken cts);
 
         /// <summary>
         /// Асинхронное получение списка объектов с пагинацией
@@ -58,6 +59,6 @@ namespace Timesheets.BD.Interfaces
         /// <param name="name">Имя объекта</param>
         /// <param name="cts">Маркер отмены</param>
         /// <returns>Искомый объект</returns>
-        Task<T> FindByNameAsync(string name, CancellationToken cts);
+        Task<List<T>> FindByNameAsync(string name, CancellationToken cts);
     }
 }

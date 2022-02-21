@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -25,7 +26,7 @@ namespace Timesheets.API.Controllers
         public async Task<ActionResult<PersonDto>> ReadAsync([FromRoute] int id, CancellationToken cts)
         {
             Person result = await _repository.GetAsync(id, cts);
-            if (result.Id == 0)
+            if (result == null)
             {
                 return NotFound("Пользователя с указанным id не существует.");
             }
@@ -35,14 +36,15 @@ namespace Timesheets.API.Controllers
 
         [HttpGet]
         [Route("search")]
-        public async Task<ActionResult<PersonDto>> FindByNameAsync([FromQuery] string Term, CancellationToken cts)
+        public async Task<ActionResult<IEnumerable<PersonDto>>> FindByNameAsync([FromQuery] string Term, CancellationToken cts)
         {
-            Person result = await _repository.FindByNameAsync(Term, cts);
-            if (result.Id == 0)
+            var result = await _repository.FindByNameAsync(Term, cts);
+            if (!result.Any())
             {
-                return NotFound("Пользователя с указанным id не существует.");
+                return NotFound("Пользователей с указанным именем не существует.");
             }
-            return DtoFromPerson(result);
+
+            return ListPersonFromDto(result);
         }
 
         [HttpGet]
@@ -55,14 +57,7 @@ namespace Timesheets.API.Controllers
                 return NotFound("Ничего не найдено");
             }
 
-            List<PersonDto> finallyList = new List<PersonDto>();
-
-            foreach (var result in resultList)
-            {
-                finallyList.Add(DtoFromPerson(result));
-            }
-
-            return finallyList;
+            return resultList.Select(DtoFromPerson).ToList();
         }
 
         [HttpPost]
@@ -72,16 +67,16 @@ namespace Timesheets.API.Controllers
         }
 
         [HttpPut]
-        public async Task UpdateAsync([FromBody] PersonDto newPerson, CancellationToken cts)
+        public async Task<bool> UpdateAsync([FromBody] PersonDto newPerson, CancellationToken cts)
         {
-            await _repository.UpdateAsync(PersonFromDto(newPerson), cts);
+            return await _repository.UpdateAsync(PersonFromDto(newPerson), cts);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task DeleteAsync([FromRoute] int id, CancellationToken cts)
+        public async Task<bool> DeleteAsync([FromRoute] int id, CancellationToken cts)
         {
-            await _repository.DeleteAsync(id, cts);
+            return await _repository.DeleteAsync(id, cts);
         }
 
         private static Person PersonFromDto(PersonDto dto)
@@ -108,6 +103,11 @@ namespace Timesheets.API.Controllers
                 FirstName = person.FirstName,
                 LastName = person.LastName
             };
+        }
+
+        private static List<PersonDto> ListPersonFromDto(List<Person> inputList)
+        {
+            return inputList.Select(DtoFromPerson).ToList();
         }
     }
 }
